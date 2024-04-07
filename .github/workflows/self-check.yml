@@ -21,11 +21,11 @@ jobs:
         run: make build
       - name: Quality check
         run: make lint test
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
-        with:
-          coverageCommand: make report
-          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+      #- name: Test & publish code coverage
+      #  uses: paambaati/codeclimate-action@v5.0.0
+      #  env:
+      #    CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      #    JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
+      #  with:
+      #    coverageCommand: make report
+      #    coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
