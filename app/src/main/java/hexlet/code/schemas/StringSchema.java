@@ -1,6 +1,6 @@
 package hexlet.code.schemas;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema {
     private boolean isRequired;
     private boolean isMinLength;
     private int minLength;
@@ -23,14 +23,14 @@ public class StringSchema {
         return this;
     }
     public boolean isValid(String stringToValidate) {
-        if (isRequired) {
-            return stringToValidate != null && !stringToValidate.isEmpty();
+        if (isRequired && (stringToValidate == null || stringToValidate.isEmpty())) {
+            return false;
         }
-        if (isMinLength) {
-            return stringToValidate.length() >= minLength;
+        if (isMinLength && stringToValidate.length() < minLength) {
+            return false;
         }
-        if (isContains) {
-            return stringToValidate.contains(stringToContain);
+        if (isContains && !stringToValidate.contains(stringToContain)) {
+            return false;
         }
         return true;
     }
