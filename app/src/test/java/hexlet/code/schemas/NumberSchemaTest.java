@@ -1,17 +1,24 @@
 package hexlet.code.schemas;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import hexlet.code.Validator;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class NumberSchemaTest {
+    private NumberSchema schema;
+
+    @BeforeEach
+    public void beforeEach() {
+        var v = new Validator();
+        schema = v.number();
+    }
+
     @Test
     public void testNoConstraints() {
-        var numberSchema = new NumberSchema();
-
-        var actual1 = numberSchema.isValid(null);
-        var actual2 = numberSchema.isValid(5);
+        var actual1 = schema.isValid(null);
+        var actual2 = schema.isValid(5);
 
         assertTrue(actual1);
         assertTrue(actual2);
@@ -19,11 +26,10 @@ class NumberSchemaTest {
 
     @Test
     public void testRequired() {
-        var numberSchema = new NumberSchema();
-        numberSchema.required();
+        schema.required();
 
-        var actual1 = numberSchema.isValid(null);
-        var actual2 = numberSchema.isValid(10);
+        var actual1 = schema.isValid(null);
+        var actual2 = schema.isValid(10);
 
         assertFalse(actual1);
         assertTrue(actual2);
@@ -31,15 +37,14 @@ class NumberSchemaTest {
 
     @Test
     public void testPositive() {
-        var numberSchema = new NumberSchema();
-        numberSchema.positive();
+        schema.positive();
+        var actual1 = schema.isValid(null);
 
-        var actual1 = numberSchema.isValid(null);
-        numberSchema.required();
-        var actual2 = numberSchema.isValid(null);
-        var actual3 = numberSchema.isValid(-10);
-        var actual4 = numberSchema.isValid(0);
-        var actual5 = numberSchema.isValid(10);
+        schema.required();
+        var actual2 = schema.isValid(null);
+        var actual3 = schema.isValid(-10);
+        var actual4 = schema.isValid(0);
+        var actual5 = schema.isValid(10);
 
         assertTrue(actual1);
         assertFalse(actual2);
@@ -50,13 +55,12 @@ class NumberSchemaTest {
 
     @Test
     public void testRange() {
-        var numberSchema = new NumberSchema();
-        numberSchema.range(5, 10);
+        schema.range(5, 10);
 
-        var actual1 = numberSchema.isValid(5);
-        var actual2 = numberSchema.isValid(10);
-        var actual3 = numberSchema.isValid(4);
-        var actual4 = numberSchema.isValid(11);
+        var actual1 = schema.isValid(7);
+        var actual2 = schema.isValid(5);
+        var actual3 = schema.isValid(2);
+        var actual4 = schema.isValid(11);
 
         assertTrue(actual1);
         assertTrue(actual2);
