@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapSchema<T> extends BaseSchema<Map<?, ?>> {
+public final class MapSchema<T> extends BaseSchema<Map<?, ?>> {
     private boolean isSizeOfActive;
     private int sizeConstraint;
     private boolean isShapeActive;
