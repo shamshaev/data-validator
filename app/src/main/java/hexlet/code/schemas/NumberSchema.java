@@ -22,20 +22,20 @@ public final class NumberSchema extends BaseSchema<Number> {
         return this;
     }
 
-    private boolean isPositiveValid(Number number) {
-        return !isPositiveActive || number.doubleValue() > 0;
+    private boolean isPositiveValid(Double numberDouble) {
+        return !isPositiveActive || numberDouble > 0;
     }
 
-    private boolean isRangeValid(Number number) {
-        return !isRangeActive || number.doubleValue() >= minRange && number.doubleValue() <= maxRange;
+    private boolean isRangeValid(Double numberDouble) {
+        return !isRangeActive || numberDouble >= minRange && numberDouble <= maxRange;
     }
 
     @Override
     public boolean isValid(Number number) {
-        var numberDouble = (number != null) ? number.doubleValue() : null;
+        Double numberDouble = (number != null) ? number.doubleValue() : null;
 
-        var condition1 = isRequiredValidWithNull(number);
-        var condition2 = isRequiredValidWithNotNull(number) && isPositiveValid(numberDouble)
+        var condition1 = isRequiredValidWithNull(numberDouble);
+        var condition2 = isRequiredValidWithNotNull(numberDouble) && isPositiveValid(numberDouble)
                 && isRangeValid(numberDouble);
 
         return condition1 || condition2;
