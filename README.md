@@ -24,7 +24,7 @@ Number methods:
 Map methods:
 * required() - set a requirement that is not null.
 * sizeof(size) - set a requirement to have a specified size.
-* shape(Map<?, BaseSchema<T>>) - set a requirement to Map value according to built schema.
+* shape(Map\<?, BaseSchema\<T\>\>) - set a requirement to Map value according to built schema.
 
 Common method:
 * isValid(inputValue) - return boolean value of validation according to built schema.
