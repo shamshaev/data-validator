@@ -78,7 +78,7 @@ class MapSchemaTest {
         assertFalse(actual2);
         assertFalse(actual3);
 
-        Map<Number, BaseSchema<Number>> schemas2 = new HashMap<>();
+        Map<Number, BaseSchema<Integer>> schemas2 = new HashMap<>();
         schemas2.put(8, v.number().positive());
         schemas2.put(5, v.number().required().range(5, 9));
 

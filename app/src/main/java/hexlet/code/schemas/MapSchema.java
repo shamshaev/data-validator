@@ -1,56 +1,36 @@
 package hexlet.code.schemas;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class MapSchema<T> extends BaseSchema<Map<?, ?>> {
-    private boolean isSizeOfActive;
-    private int sizeConstraint;
-    private boolean isShapeActive;
-    private Map<?, BaseSchema<T>> mapConstraint;
 
-    public MapSchema<T> required() {
-        isRequiredActive = true;
+    public MapSchema() {
+        addCheck(
+                "allowed",
+                Objects::isNull
+        );
+    }
+
+    public MapSchema required() {
+        required = true;
         return this;
     }
 
-    public MapSchema<T> sizeof(int size) {
-        isSizeOfActive = true;
-        sizeConstraint = size;
+    public MapSchema sizeof(int size) {
+        addCheck(
+                "sizeof",
+                value -> value.size() == size
+        );
         return this;
     }
 
-    public MapSchema<T> shape(Map<?, BaseSchema<T>> map) {
-        isShapeActive = true;
-        mapConstraint = new HashMap<>(map);
+    public MapSchema shape(Map<?, BaseSchema<T>> map) {
+        addCheck(
+                "shape",
+                value -> value.keySet().stream()
+                        .allMatch(key -> map.get(key).isValid((T) value.get(key)))
+        );
         return this;
-    }
-
-    private boolean isSizeofValid(Map<?, ?> map) {
-        return !isSizeOfActive || map.size() == sizeConstraint;
-    }
-
-    @SuppressWarnings("unchecked")
-    private boolean isShapeValid(Map<?, ?> map) {
-        return !isShapeActive || map.size() == map.keySet().stream()
-                .filter(key -> {
-                    var schema = mapConstraint.get(key);
-                    T valueMap;
-                    try {
-                        valueMap = (T) map.get(key);
-                    } catch (ClassCastException e) {
-                        throw new ClassCastException();
-                    }
-                    return schema.isValid(valueMap);
-                })
-                .count();
-    }
-
-    @Override
-    public boolean isValid(Map<?, ?> map) {
-        var condition1 = isRequiredValidWithNull(map);
-        var condition2 = isRequiredValidWithNotNull(map) && isSizeofValid(map) && isShapeValid(map);
-
-        return condition1 || condition2;
     }
 }
