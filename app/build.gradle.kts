@@ -1,11 +1,7 @@
 plugins {
-    application
+    java
     checkstyle
     jacoco
-}
-
-application {
-    mainClass = "hexlet.code.Validator"
 }
 
 group = "hexlet.code"
@@ -20,7 +16,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     compileOnly("org.projectlombok:lombok:1.18.32")
-
 }
 
 tasks.test {
